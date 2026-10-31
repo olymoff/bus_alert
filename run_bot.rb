@@ -7,6 +7,8 @@ require 'json'
 require 'time'
 require 'socket'
 
+ENV['TZ'] ||= 'Asia/Tashkent'
+
 # ==============================================================================
 # TASHBUS ALERT BOT (Toshkent - Shayxontohur, Nabixon Chustiy mahallasi, 11 va 28)
 # Qo'shimcha kutubxonalarsiz (macOS ichki Ruby + JSON + Net::HTTP orqali) ishlaydi!

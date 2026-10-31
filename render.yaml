@@ -3,8 +3,10 @@ services:
     name: tashbus-alert-bot
     env: ruby
     plan: free
-    buildCommand: ""
+    buildCommand: "bundle install || true"
     startCommand: ruby run_bot.rb
     envVars:
       - key: BOT_TOKEN
         value: 8912136250:AAEBiGb1GE2qJTp8yX86AcU1g0MJDAsTsr0
+      - key: TZ
+        value: Asia/Tashkent
