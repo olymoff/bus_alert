@@ -505,6 +505,38 @@ def settings_kb(settings)
   }
 end
 
+def prompt_for_time(chat_id, state_info, msg_id = nil)
+  days = state_info['selected_days'] || [1]
+  if days.size == 1
+    state_info['step'] = 'entering_time_same'
+    day_name = WEEKDAYS_UZ[days.first]
+    txt = "🕗 <b>4-qadam: #{day_name} kuni bekatdan chiqish vaqtingizni kiriting (SS:DD formatida):</b>\n\n" \
+          "Masalan: <code>08:00</code> yoki <code>07:45</code>"
+    if msg_id
+      tg_api('editMessageText', { chat_id: chat_id, message_id: msg_id, text: txt, parse_mode: 'HTML' })
+    else
+      tg_api('sendMessage', { chat_id: chat_id, text: txt, parse_mode: 'HTML' })
+    end
+  else
+    state_info['step'] = 'choosing_time_mode'
+    days_str = days.map { |d| WEEKDAYS_UZ[d] }.join(', ')
+    txt = "🕗 <b>4-qadam: Chiqish vaqtini belgilash</b>\n\n" \
+          "Tanlangan kunlar: <b>#{days_str}</b>\n\n" \
+          "Barcha kunlarga bir xil vaqt belgilaysizmi yoki har bir kunga alohida (har xil) vaqtmi?"
+    kb = {
+      inline_keyboard: [
+        [{ text: '⚡️ Barcha kunlarga bir xil vaqt', callback_data: 'time_mode:same' }],
+        [{ text: '🗓 Har bir kunga har xil (alohida) vaqt', callback_data: 'time_mode:individual' }]
+      ]
+    }
+    if msg_id
+      tg_api('editMessageText', { chat_id: chat_id, message_id: msg_id, text: txt, parse_mode: 'HTML', reply_markup: kb })
+    else
+      tg_api('sendMessage', { chat_id: chat_id, text: txt, parse_mode: 'HTML', reply_markup: kb })
+    end
+  end
+end
+
 # ==============================================================================
 # MESSAGE HANDLER
 # ==============================================================================
@@ -717,14 +749,7 @@ def handle_message(db, msg)
     extracted_buses = text.scan(/\d+[A-Za-zА-Яа-я]?/).map(&:strip).uniq
     if !extracted_buses.empty?
       state_info['selected_buses'] = extracted_buses
-      state_info['step'] = 'entering_time'
-      tg_api('sendMessage', {
-        chat_id: chat_id,
-        text: "✅ <b>Avtobuslar tanlandi:</b> #{extracted_buses.join(', ')}-avtobuslar\n\n" \
-              "🕗 <b>4-qadam: Bekatdan chiqish vaqtingizni kiriting (SS:DD):</b>\n\n" \
-              "Masalan: <code>08:00</code> yoki <code>07:45</code>",
-        parse_mode: 'HTML'
-      })
+      prompt_for_time(chat_id, state_info)
     else
       tg_api('sendMessage', {
         chat_id: chat_id,
@@ -735,8 +760,8 @@ def handle_message(db, msg)
     return
   end
 
-  # Vaqt kiritish bosqichi (SS:DD)
-  if state_info['step'] == 'entering_time'
+  # Vaqt kiritish: Barcha kunlar uchun umumiy vaqt (SS:DD)
+  if state_info['step'] == 'entering_time' || state_info['step'] == 'entering_time_same'
     if text =~ /\A([01]?\d|2[0-3]):([0-5]\d)\z/
       hh = format('%02d', Regexp.last_match(1).to_i)
       mm = format('%02d', Regexp.last_match(2).to_i)
@@ -744,6 +769,7 @@ def handle_message(db, msg)
       selected_days = state_info['selected_days'] || [1]
       bus_str = (state_info['selected_buses'] || %w[11 28]).join(',')
       bus_str = '11' if bus_str.empty?
+      stop_name_saved = state_info['stop_name'] || 'Mening bekatim'
 
       selected_days.each do |wday|
         db['schedules'] << {
@@ -751,7 +777,7 @@ def handle_message(db, msg)
           'user_id' => chat_id,
           'weekday' => wday,
           'stop_id' => state_info['stop_id'] || 'custom_stop',
-          'stop_name' => state_info['stop_name'] || 'Mening bekatim',
+          'stop_name' => stop_name_saved,
           'stop_lat' => state_info['stop_lat'] || 41.311087,
           'stop_lon' => state_info['stop_lon'] || 69.240562,
           'bus_numbers' => bus_str,
@@ -762,11 +788,11 @@ def handle_message(db, msg)
         db['next_id'] += 1
       end
 
+      save_db(db)
       t_obj = Time.parse(formatted_time)
       notice_time = (t_obj - settings['advance_notice_min'] * 60).strftime('%H:%M')
       prep_min = settings['dressing_min'] + settings['walking_min'] + SAFETY_BUFFER_MIN
       days_names = selected_days.map { |d| WEEKDAYS_UZ[d] }.join(', ')
-      stop_name_saved = state_info['stop_name'] || 'Mening bekatim'
       db['states'].delete(uid)
 
       tg_api('sendMessage', {
@@ -786,6 +812,81 @@ def handle_message(db, msg)
       tg_api('sendMessage', {
         chat_id: chat_id,
         text: "⚠️ Vaqt formati xato. Iltimos, <code>08:00</code> yoki <code>07:45</code> formatida yozing:",
+        parse_mode: 'HTML'
+      })
+    end
+    return
+  end
+
+  # Vaqt kiritish: Har bir kun uchun alohida (har xil) vaqt
+  if state_info['step'] == 'entering_time_individual'
+    if text =~ /\A([01]?\d|2[0-3]):([0-5]\d)\z/
+      hh = format('%02d', Regexp.last_match(1).to_i)
+      mm = format('%02d', Regexp.last_match(2).to_i)
+      formatted_time = "#{hh}:#{mm}"
+
+      days_list = state_info['individual_days'] || []
+      times_map = state_info['day_times'] ||= {}
+      current_idx = times_map.size
+      current_day = days_list[current_idx]
+
+      times_map[current_day] = formatted_time
+
+      if times_map.size < days_list.size
+        next_idx = times_map.size
+        next_day = days_list[next_idx]
+        tg_api('sendMessage', {
+          chat_id: chat_id,
+          text: "✅ #{WEEKDAYS_UZ[current_day]}: <b>#{formatted_time}</b> qabul qilindi.\n\n" \
+                "🔹 <b>#{next_idx + 1}/#{days_list.size}: #{WEEKDAYS_UZ[next_day]}</b> kuni soat nechada chiqasiz? (SS:DD):",
+          parse_mode: 'HTML'
+        })
+      else
+        # Barcha kunlar uchun alohida vaqtlar to'liq kiritildi
+        bus_str = (state_info['selected_buses'] || %w[11 28]).join(',')
+        bus_str = '11' if bus_str.empty?
+        stop_name_saved = state_info['stop_name'] || 'Mening bekatim'
+
+        summary_lines = []
+        days_list.each do |wday|
+          t_str = times_map[wday]
+          db['schedules'] << {
+            'id' => db['next_id'],
+            'user_id' => chat_id,
+            'weekday' => wday,
+            'stop_id' => state_info['stop_id'] || 'custom_stop',
+            'stop_name' => stop_name_saved,
+            'stop_lat' => state_info['stop_lat'] || 41.311087,
+            'stop_lon' => state_info['stop_lon'] || 69.240562,
+            'bus_numbers' => bus_str,
+            'target_time' => t_str,
+            'last_window_date' => '',
+            'last_leave_date' => ''
+          }
+          db['next_id'] += 1
+          summary_lines << "• <b>#{WEEKDAYS_UZ[wday]}:</b> soat <b>#{t_str}</b>"
+        end
+
+        save_db(db)
+        db['states'].delete(uid)
+        prep_min = settings['dressing_min'] + settings['walking_min'] + SAFETY_BUFFER_MIN
+
+        tg_api('sendMessage', {
+          chat_id: chat_id,
+          text: "🎉 <b>Haftalik alohida jadvallaringiz muvaffaqiyatli saqlandi!</b>\n\n" \
+                "🚏 <b>Bekat:</b> #{stop_name_saved}\n" \
+                "🚌 <b>Avtobuslar:</b> #{bus_str}-yo'nalishlar\n\n" \
+                "📅 <b>Kun tartibi:</b>\n#{summary_lines.join("\n")}\n\n" \
+                "🔔 Har kuni o'z vaqtida (<b>#{settings['advance_notice_min']} daq. oldin</b>) bildirishnomalar yuboriladi va " \
+                "avtobusga #{prep_min} daqiqa qolganda kiyinish signali beriladi!",
+          parse_mode: 'HTML',
+          reply_markup: main_menu_kb
+        })
+      end
+    else
+      tg_api('sendMessage', {
+        chat_id: chat_id,
+        text: "⚠️ Vaqt formati xato. Iltimos, <code>08:30</code> yoki <code>09:45</code> formatida yozing:",
         parse_mode: 'HTML'
       })
     end
@@ -942,15 +1043,28 @@ def handle_callback(db, cb)
       tg_api('answerCallbackQuery', { callback_query_id: cb_id, text: 'Kamida bitta avtobusni tanlang yoki raqamini yozing!', show_alert: true })
       return
     end
-    state_info['step'] = 'entering_time'
-    tg_api('editMessageText', {
-      chat_id: chat_id,
-      message_id: msg_id,
-      text: "🕗 <b>4-qadam: Bekatdan chiqish vaqtingizni kiriting (SS:DD formatida):</b>\n\n" \
-            "Masalan: <code>08:00</code> yoki <code>07:45</code>\n\n" \
-            "<i>Bot siz kiritgan vaqtdan oldinroq avtobuslarni tekshirib, kiyinib uydan chiqish kerak bo'lgan daqiqada ogohlantiradi!</i>",
-      parse_mode: 'HTML'
-    })
+    prompt_for_time(chat_id, state_info, msg_id)
+    tg_api('answerCallbackQuery', { callback_query_id: cb_id })
+
+  # --- VAQT REJIMINI TANLASH (BIR XIL YOKI HAR XIL) ---
+  elsif data == 'time_mode:same'
+    state_info['step'] = 'entering_time_same'
+    days = state_info['selected_days'] || [1]
+    days_str = days.map { |d| WEEKDAYS_UZ[d] }.join(', ')
+    txt = "🕗 <b>Barcha tanlangan kunlar (#{days_str}) uchun umumiy chiqish vaqtingizni kiriting (SS:DD):</b>\n\n" \
+          "Masalan: <code>08:00</code> yoki <code>07:45</code>"
+    tg_api('editMessageText', { chat_id: chat_id, message_id: msg_id, text: txt, parse_mode: 'HTML' })
+    tg_api('answerCallbackQuery', { callback_query_id: cb_id })
+  elsif data == 'time_mode:individual'
+    state_info['step'] = 'entering_time_individual'
+    state_info['individual_days'] = (state_info['selected_days'] || [1]).dup
+    state_info['day_times'] = {}
+    first_day = state_info['individual_days'].first
+    total = state_info['individual_days'].size
+    txt = "🗓 <b>Har bir kun uchun alohida (har xil) vaqt belgilash:</b>\n\n" \
+          "🔹 <b>1/#{total}. #{WEEKDAYS_UZ[first_day]}</b> kuni soat nechada chiqasiz? (SS:DD formatida yozing):\n\n" \
+          "Masalan: <code>08:30</code>"
+    tg_api('editMessageText', { chat_id: chat_id, message_id: msg_id, text: txt, parse_mode: 'HTML' })
     tg_api('answerCallbackQuery', { callback_query_id: cb_id })
 
   # --- JADVALNI O'CHIRISH ---
