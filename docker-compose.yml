@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  tashbus-bot:
+    build: .
+    container_name: tashbus_alert_bot
+    restart: always
+    environment:
+      - BOT_TOKEN=8912136250:AAEBiGb1GE2qJTp8yX86AcU1g0MJDAsTsr0
+      - TZ=Asia/Tashkent
+    volumes:
+      - ./bot_data.json:/app/bot_data.json

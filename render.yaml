@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: tashbus-alert-bot
+    env: ruby
+    plan: free
+    buildCommand: ""
+    startCommand: ruby run_bot.rb
+    envVars:
+      - key: BOT_TOKEN
+        value: 8912136250:AAEBiGb1GE2qJTp8yX86AcU1g0MJDAsTsr0

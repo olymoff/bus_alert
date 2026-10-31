@@ -1,0 +1,15 @@
+[Unit]
+Description=TashBus Alert Telegram Bot
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/tashbus_alert_bot
+ExecStart=/usr/bin/ruby run_bot.rb
+Restart=always
+RestartSec=5
+Environment=TZ=Asia/Tashkent
+
+[Install]
+WantedBy=multi-user.target

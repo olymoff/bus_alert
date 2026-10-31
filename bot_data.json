@@ -1,0 +1,79 @@
+{
+  "users": {
+    "5632994733": {
+      "dressing_min": 5,
+      "walking_min": 8,
+      "advance_notice_min": 20
+    }
+  },
+  "schedules": [
+    {
+      "id": 13,
+      "user_id": 5632994733,
+      "weekday": 1,
+      "stop_id": "chustiy_beruniy",
+      "stop_name": "Nabixon Chustiy mahallasi (Beruniy / Ibn-Sino yo'nalishi)",
+      "stop_lat": 41.33312,
+      "stop_lon": 69.21815,
+      "bus_numbers": "11,28",
+      "target_time": "07:05",
+      "last_window_date": "",
+      "last_leave_date": ""
+    },
+    {
+      "id": 14,
+      "user_id": 5632994733,
+      "weekday": 2,
+      "stop_id": "chustiy_beruniy",
+      "stop_name": "Nabixon Chustiy mahallasi (Beruniy / Ibn-Sino yo'nalishi)",
+      "stop_lat": 41.33312,
+      "stop_lon": 69.21815,
+      "bus_numbers": "11,28",
+      "target_time": "07:05",
+      "last_window_date": "",
+      "last_leave_date": ""
+    },
+    {
+      "id": 15,
+      "user_id": 5632994733,
+      "weekday": 3,
+      "stop_id": "chustiy_beruniy",
+      "stop_name": "Nabixon Chustiy mahallasi (Beruniy / Ibn-Sino yo'nalishi)",
+      "stop_lat": 41.33312,
+      "stop_lon": 69.21815,
+      "bus_numbers": "11,28",
+      "target_time": "07:05",
+      "last_window_date": "",
+      "last_leave_date": ""
+    },
+    {
+      "id": 16,
+      "user_id": 5632994733,
+      "weekday": 4,
+      "stop_id": "chustiy_beruniy",
+      "stop_name": "Nabixon Chustiy mahallasi (Beruniy / Ibn-Sino yo'nalishi)",
+      "stop_lat": 41.33312,
+      "stop_lon": 69.21815,
+      "bus_numbers": "11,28",
+      "target_time": "07:05",
+      "last_window_date": "",
+      "last_leave_date": ""
+    },
+    {
+      "id": 17,
+      "user_id": 5632994733,
+      "weekday": 5,
+      "stop_id": "chustiy_beruniy",
+      "stop_name": "Nabixon Chustiy mahallasi (Beruniy / Ibn-Sino yo'nalishi)",
+      "stop_lat": 41.33312,
+      "stop_lon": 69.21815,
+      "bus_numbers": "11,28",
+      "target_time": "07:05",
+      "last_window_date": "",
+      "last_leave_date": ""
+    }
+  ],
+  "states": {
+  },
+  "next_id": 18
+}
