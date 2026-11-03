@@ -57,6 +57,16 @@ ORDERED_DAYS = [1, 2, 3, 4, 5, 6, 0]
 SAFETY_BUFFER_MIN = 2
 AVERAGE_BUS_SPEED_KMH = 22.0
 
+# Toshkent shahri bo'yicha rasmiy Toshshahartransxizmat avtobus yo'nalishlari
+VALID_TASHKENT_BUSES = %w[
+  1 2 3 5 8 9 10 11 12 13 14 15 16 17 18 19 21 22 24 26 27 28 29 30 31 32 33 34 35 37 38 39 40 
+  41 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 60 61 62 63 64 65 66 67 68 69 70 71 72 73 
+  74 75 76 77 78 80 81 82 83 84 85 86 87 88 89 90 91 93 94 95 96 97 98 99 100 101 102 103 104 
+  105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 128 
+  129 130 131 132 133 134 135 136 137 138 139 140 141 144 145 146 147 148 149 150 151 152 153 
+  155 156 160 161 163 171 181 183 184 185 188 190 196 198 199
+].freeze
+
 def load_db
   if File.exist?(DB_FILE)
     JSON.parse(File.read(DB_FILE))
@@ -112,27 +122,88 @@ def find_nearest_hub(lat, lon)
   { 'hub_key' => best_key, 'hub' => best_hub, 'dir' => best_dir, 'distance_km' => min_d.round(2) }
 end
 
+def clean_uz(str)
+  str.to_s.downcase.gsub(/[^a-z0-9]/, '')
+end
+
+def phonetic_uz(str)
+  s = clean_uz(str)
+  s.gsub('x', 'h').gsub('kh', 'h').gsub('o', 'a').gsub('y', '')
+end
+
+def levenshtein_dist(s1, s2)
+  m = s1.length
+  n = s2.length
+  return m if n == 0
+  return n if m == 0
+  d = Array.new(m + 1) { Array.new(n + 1) }
+  (0..m).each { |i| d[i][0] = i }
+  (0..n).each { |j| d[0][j] = j }
+  (1..n).each do |j|
+    (1..m).each do |i|
+      d[i][j] = if s1[i - 1] == s2[j - 1]
+                  d[i - 1][j - 1]
+                else
+                  [d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + 1].min
+                end
+    end
+  end
+  d[m][n]
+end
+
 def normalize_text(str)
-  str.to_s.downcase.gsub(/['`‘’ʻ"-]/, '').strip
+  clean_uz(str)
 end
 
 def search_hubs(query)
-  raw_q = query.to_s.downcase.strip
-  norm_q = normalize_text(query)
-  return [] if norm_q.empty?
+  q_raw = query.to_s.downcase.strip
+  q_clean = clean_uz(query)
+  q_ph = phonetic_uz(query)
+  return [] if q_clean.empty?
 
-  matches = []
+  scored = []
+
   STATION_HUBS.each do |k, v|
-    name = v['display_name'].to_s.downcase
-    norm_name = normalize_text(name)
-    dist = v['district'].to_s.downcase
-    keys = (v['keywords'] || []).map { |kw| normalize_text(kw) }
+    score = 0
+    name = v['display_name'].to_s
+    name_clean = clean_uz(name)
+    name_ph = phonetic_uz(name)
+    dist_clean = clean_uz(v['district'])
+    keywords = (v['keywords'] || []).map { |kw| clean_uz(kw) }
 
-    if norm_name.include?(norm_q) || dist.include?(raw_q) || keys.any? { |kw| kw.include?(norm_q) || norm_q.include?(kw) }
-      matches << v.merge('hub_key' => k)
+    if name_clean == q_clean
+      score += 100
+    elsif name_clean.start_with?(q_clean)
+      score += 80
+    elsif name_clean.include?(q_clean)
+      score += 60
+    elsif keywords.any? { |kw| kw == q_clean }
+      score += 75
+    elsif keywords.any? { |kw| kw.start_with?(q_clean) || kw.include?(q_clean) }
+      score += 55
+    elsif dist_clean.include?(q_clean)
+      score += 25
     end
+
+    if score < 50
+      if name_ph.include?(q_ph) || q_ph.include?(name_ph)
+        score = [score, 45].max
+      elsif keywords.any? { |kw| phonetic_uz(kw).include?(q_ph) }
+        score = [score, 45].max
+      elsif q_clean.length >= 4
+        dist = levenshtein_dist(q_clean, name_clean[0...[q_clean.length + 1, name_clean.length].min])
+        score = [score, 40].max if dist <= 2
+        keywords.each do |kw|
+          kw_dist = levenshtein_dist(q_clean, kw[0...[q_clean.length + 1, kw.length].min])
+          score = [score, 40].max if kw_dist <= 2
+        end
+      end
+    end
+
+    scored << [score, v.merge('hub_key' => k)] if score >= 35
   end
-  matches.first(6)
+
+  scored.sort_by { |item| -item[0] }.map { |item| item[1] }.first(5)
 end
 
 def fetch_bus_arrivals(bus_numbers)
@@ -227,9 +298,33 @@ def directions_kb(hub_key, hub)
   rows = []
   hub['directions'].each do |d_key, dir|
     routes_str = dir['routes'].join(', ')
-    rows << [{ text: "👉 #{dir['side_name']} (#{routes_str})", callback_data: "sel_dir:#{hub_key}:#{d_key}" }]
+    routes_text = routes_str.empty? ? '' : " (#{routes_str})"
+    rows << [{ text: "👉 #{dir['side_name']}#{routes_text}", callback_data: "sel_dir:#{hub_key}:#{d_key}" }]
   end
   rows << [{ text: '🔍 Boshqa bekat yozish', callback_data: 'reenter_stop' }]
+  { inline_keyboard: rows }
+end
+
+def popular_stops_kb(custom_query = nil)
+  rows = [
+    [
+      { text: "🚏 Chilonzor", callback_data: "pick_hub:chilonzor" },
+      { text: "🚏 Chorsu", callback_data: "pick_hub:chorsu" }
+    ],
+    [
+      { text: "🚏 Beruniy", callback_data: "pick_hub:beruniy" },
+      { text: "🚏 Farhod bozori", callback_data: "pick_hub:farhod" }
+    ],
+    [
+      { text: "🚏 Yunusobod", callback_data: "pick_hub:yunusobod" },
+      { text: "🚏 Oybek", callback_data: "pick_hub:oybek" }
+    ]
+  ]
+  if custom_query && !custom_query.to_s.strip.empty? && custom_query.to_s.strip.length >= 3
+    short_q = custom_query.to_s.strip.slice(0, 25)
+    rows << [{ text: "➕ «#{short_q}» mahalliy bekatini kiritish", callback_data: "start_custom_stop" }]
+  end
+  rows << [{ text: "🔍 Bekat nomini qayta yozish", callback_data: "reenter_stop" }]
   { inline_keyboard: rows }
 end
 
@@ -486,16 +581,32 @@ def handle_message(db, msg)
 
   # 2-qadam: Bekat nomini yozib qidirganda
   if state_info['step'] == 'choosing_stop' && !text.empty? && !text.start_with?('/')
+    # Foydalanuvchi bekat o'rniga adashib avtobus raqamini yozgan bo'lsa
+    if text =~ /\A\d+[a-zа-я]?\z/i
+      tg_api('sendMessage', {
+        chat_id: chat_id,
+        text: "⚠️ Siz bekat nomi o'rniga <b>#{text}-avtobus</b> raqamini kiritdingiz!\n\n" \
+              "Iltimos, avval <b>bekat nomini</b> yozing (masalan: <i>Chilonzor, Oybek, Farhod, Beruniy, Chorsu, Yunusobod</i>) yoki Telegram'dan joylashuv yuboring:",
+        parse_mode: 'HTML'
+      })
+      return
+    end
+
     matches = search_hubs(text)
 
     if matches.empty?
+      state_info['pending_custom_stop'] = text
       tg_api('sendMessage', {
         chat_id: chat_id,
-        text: "⚠️ <b>«#{text}» nomli bekat topilmadi!</b>\n\n" \
-              "Iltimos, bekat nomini tekshirib qayta yozing:\n" \
-              "<i>Masalan: Oybek, Chilonzor, Chorsu, Farhod, Yunusobod, Beruniy, Novza, Shahriston, Qo'yliq</i>\n\n" \
-              "Yoki Telegram xaritasidan 📎 <b>Joylashuv (Location)</b> yuborishingiz mumkin:",
-        parse_mode: 'HTML'
+        text: "⚠️ <b>«#{text}» nomli bekat Toshkent bekatlari bazasida topilmadi!</b>\n\n" \
+              "Avtomatik tekshiruv shuni ko'rsatdiki, Toshkent shahrida bunday rasmiy bekat aniqlanmadi.\n\n" \
+              "Quyidagilardan birini tanlang:\n" \
+              "1️⃣ Bekat nomini to'g'ri qayta yozing (masalan: <i>Chilonzor, Oybek, Farhod, Beruniy, Chorsu, Yunusobod</i>);\n" \
+              "2️⃣ 📎 Telegram'dan <b>Joylashuv (Location)</b> yuboring;\n" \
+              "3️⃣ Yoki pastdagi mashhur bekatlardan birini tanlang;\n" \
+              "4️⃣ Agar bu kichik mahalla bekati bo'lsa, pastdagi <b>«➕ «#{text.slice(0, 20)}» mahalliy bekatini kiritish»</b> tugmasini bosing:",
+        parse_mode: 'HTML',
+        reply_markup: popular_stops_kb(text)
       })
     elsif matches.size == 1
       hub = matches.first
@@ -516,6 +627,7 @@ def handle_message(db, msg)
       rows = matches.map do |m|
         [{ text: "🚏 #{m['display_name']}", callback_data: "pick_hub:#{m['hub_key']}" }]
       end
+      rows << [{ text: '🔍 Boshqa bekat nomini yozish', callback_data: 'reenter_stop' }]
       tg_api('sendMessage', {
         chat_id: chat_id,
         text: "🔍 <b>«#{text}» bo'yicha quyidagi bekatlar topildi:</b>\nKeraklisini bosing:",
@@ -523,6 +635,64 @@ def handle_message(db, msg)
         reply_markup: { inline_keyboard: rows }
       })
     end
+    return
+  end
+
+  # Mahalliy bekat uchun yo'nalish nomini matn ko'rinishida yozganda
+  if state_info['step'] == 'writing_custom_direction' && !text.empty? && !text.start_with?('/')
+    dir_label = text.strip
+    stop_name = state_info['custom_stop_name'] || 'Mahalliy bekat'
+    state_info['stop_name'] = "#{stop_name} (#{dir_label})"
+    state_info['step'] = 'choosing_custom_buses'
+
+    tg_api('sendMessage', {
+      chat_id: chat_id,
+      text: "🚏 Bekat: <b>#{state_info['stop_name']}</b>\n\n" \
+            "🚌 <b>3-qadam: Ushbu bekatdan qatnaydigan avtobus raqamini yozing:</b>\n" \
+            "Masalan: <code>11</code> yoki <code>28, 84</code>\n\n" \
+            "<i>(Diqqat: Kiritilgan avtobus Toshkentning rasmiy avtobuslari bazasidan avtomatik tekshiriladi)</i>",
+      parse_mode: 'HTML'
+    })
+    return
+  end
+
+  # Mahalliy bekat uchun avtobus kiritilganda (Toshkent rasmiy bazasidan tekshiriladi)
+  if state_info['step'] == 'choosing_custom_buses' && !text.empty? && !text.start_with?('/')
+    extracted = text.scan(/\d+[A-Za-zА-Яа-я]?/).map(&:strip).uniq
+
+    if extracted.empty?
+      tg_api('sendMessage', {
+        chat_id: chat_id,
+        text: "⚠️ Avtobus raqami aniqlanmadi. Iltimos, raqam ko'rinishida yozing (masalan: <code>11</code> yoki <code>28, 84</code>):",
+        parse_mode: 'HTML'
+      })
+      return
+    end
+
+    fake_buses = extracted.reject { |b| VALID_TASHKENT_BUSES.include?(b.gsub(/\D/, '')) }
+    if !fake_buses.empty?
+      tg_api('sendMessage', {
+        chat_id: chat_id,
+        text: "❌ <b>Xatolik: #{fake_buses.join(', ')}-raqamli avtobus Toshkent shahrida mavjud emas!</b>\n\n" \
+              "Toshshahartransxizmat tizimida faqat 1 dan 199 gacha bo'lgan rasmiy avtobuslar harakatlanadi.\n\n" \
+              "Iltimos, bekatdan o'tuvchi haqiqiy avtobus raqamini kiriting (masalan: <code>11</code>, <code>28</code>, <code>84</code>):",
+        parse_mode: 'HTML'
+      })
+      return
+    end
+
+    state_info['selected_buses'] = extracted
+    state_info['allowed_routes'] = extracted
+    state_info['dir_id'] = 'custom_stop'
+    state_info['stop_lat'] ||= 41.311087
+    state_info['stop_lon'] ||= 69.240562
+
+    tg_api('sendMessage', {
+      chat_id: chat_id,
+      text: "✅ <b>Tekshiruvdan o'tdi:</b> #{extracted.join(', ')}-avtobuslar Toshkent shahri rasmiy yo'nalishi ekanligi tasdiqlandi!",
+      parse_mode: 'HTML'
+    })
+    prompt_for_time(chat_id, state_info)
     return
   end
 
@@ -540,14 +710,28 @@ def handle_message(db, msg)
       return
     end
 
-    # Tekshirish: Foydalanuvchi kiritgan avtobuslar ushbu bekatdan o'tadimi?
+    # Tekshiruv 1: Toshkent shahrida mavjud bo'lmagan soxta avtobus raqamlari
+    fake_buses = extracted.reject { |b| VALID_TASHKENT_BUSES.include?(b.gsub(/\D/, '')) }
+    if !fake_buses.empty?
+      tg_api('sendMessage', {
+        chat_id: chat_id,
+        text: "❌ <b>Xatolik: #{fake_buses.join(', ')}-raqamli avtobus Toshkent shahrida mavjud emas!</b>\n\n" \
+              "Toshkent shahrida faqat 1 dan 199 gacha bo'lgan rasmiy avtobuslar harakatlanadi.\n" \
+              "🚏 Ushbu bekatdan faqat quyidagi avtobuslar o'tadi: <b>#{allowed.join(', ')}-avtobuslar</b>\n\n" \
+              "Iltimos, to'g'ri avtobus raqamini kiriting:",
+        parse_mode: 'HTML'
+      })
+      return
+    end
+
+    # Tekshiruv 2: Foydalanuvchi kiritgan avtobuslar ushbu bekatdan o'tadimi?
     invalid_buses = extracted.reject { |b| allowed.include?(b) }
 
     if !invalid_buses.empty?
       tg_api('sendMessage', {
         chat_id: chat_id,
-        text: "⚠️ <b>Xatolik: #{invalid_buses.join(', ')}-avtobus ushbu bekatdan o'tmaydi!</b>\n\n" \
-              "🚏 <b>#{state_info['stop_name']}</b> bekatidan faqat quyidagi avtobuslar qatnaydi:\n" \
+        text: "⚠️ <b>Xatolik: #{invalid_buses.join(', ')}-avtobus «#{state_info['stop_name']}» bekatidan o'tmaydi!</b>\n\n" \
+              "🚏 Ushbu bekatdan faqat quyidagi avtobuslar qatnaydi:\n" \
               "👉 <b>#{allowed.join(', ')}-avtobuslar</b>\n\n" \
               "Iltimos, yuqoridagi ro'yxatdan to'g'ri avtobusni tanlang yoki qayta yozing:",
         parse_mode: 'HTML',
@@ -556,6 +740,11 @@ def handle_message(db, msg)
     else
       # Hammasi to'g'ri kiritildi
       state_info['selected_buses'] = extracted
+      tg_api('sendMessage', {
+        chat_id: chat_id,
+        text: "✅ <b>Tekshiruv muvaffaqiyatli:</b> #{extracted.join(', ')}-avtobus ushbu bekatdan qatnashi tasdiqlandi!",
+        parse_mode: 'HTML'
+      })
       prompt_for_time(chat_id, state_info)
     end
     return
@@ -791,10 +980,54 @@ def handle_callback(db, cb)
     tg_api('editMessageText', {
       chat_id: chat_id,
       message_id: msg_id,
-      text: "🚏 <b>Bekat nomini qayta yozib yuboring:</b>\n(Masalan: <i>Oybek, Chilonzor, Chorsu, Farhod, Yunusobod</i>):",
+      text: "🚏 <b>Bekat nomini qayta yozib yuboring:</b>\n(Masalan: <i>Oybek, Chilonzor, Chorsu, Farhod, Yunusobod, Beruniy</i>):",
       parse_mode: 'HTML'
     })
     tg_api('answerCallbackQuery', { callback_query_id: cb_id })
+  elsif data == 'start_custom_stop'
+    stop_name = state_info['pending_custom_stop'] || 'Mahalliy bekat'
+    state_info['custom_stop_name'] = stop_name
+    state_info['step'] = 'choosing_custom_direction'
+
+    reply_text = "🚏 Bekat: <b>#{stop_name}</b>\n\n" \
+                 "🧭 <b>Yo'lning qaysi tomonidasiz (qaysi yo'nalishda ketasiz)?</b>\n" \
+                 "Kerakli yo'nalishni tanlang yoki pastdan yozib yuboring:"
+    kb = {
+      inline_keyboard: [
+        [{ text: "🏢 Shahar markazi tomon", callback_data: "custom_dir:markaz" }],
+        [{ text: "🏘 Shahar tashqarisi (cheti) tomon", callback_data: "custom_dir:chekka" }],
+        [{ text: "🔄 Qarama-qarshi tomon", callback_data: "custom_dir:qarshi" }],
+        [{ text: "✍️ Boshqa yo'nalish nomini yozish", callback_data: "custom_dir:write" }]
+      ]
+    }
+    tg_api('editMessageText', { chat_id: chat_id, message_id: msg_id, text: reply_text, parse_mode: 'HTML', reply_markup: kb })
+    tg_api('answerCallbackQuery', { callback_query_id: cb_id })
+  elsif data.start_with?('custom_dir:')
+    dir_code = data.split(':')[1]
+    dir_label = case dir_code
+                when 'markaz' then "Shahar markazi tomon"
+                when 'chekka' then "Shahar tashqarisi tomon"
+                when 'qarshi' then "Qarama-qarshi tomon"
+                else nil
+                end
+
+    if dir_label
+      stop_name = state_info['custom_stop_name'] || 'Mahalliy bekat'
+      state_info['stop_name'] = "#{stop_name} (#{dir_label})"
+      state_info['step'] = 'choosing_custom_buses'
+      txt = "🚏 Bekat: <b>#{state_info['stop_name']}</b>\n\n" \
+            "🚌 <b>3-qadam: Ushbu bekatdan qatnaydigan avtobus raqamini yozing:</b>\n" \
+            "Masalan: <code>11</code> yoki <code>28, 84</code>\n\n" \
+            "<i>(Diqqat: Toshkent shahri bo'yicha rasmiy avtobuslar bazasidan avtomatik tekshiriladi)</i>"
+      tg_api('editMessageText', { chat_id: chat_id, message_id: msg_id, text: txt, parse_mode: 'HTML' })
+      tg_api('answerCallbackQuery', { callback_query_id: cb_id })
+    else
+      state_info['step'] = 'writing_custom_direction'
+      txt = "✍️ <b>Qaysi yo'nalishga qarab ketayotganingizni yozib yuboring:</b>\n" \
+            "(Masalan: <i>Chorsu tomon</i>, <i>Beruniy tomon</i>, yoki <i>Universam tomon</i>):"
+      tg_api('editMessageText', { chat_id: chat_id, message_id: msg_id, text: txt, parse_mode: 'HTML' })
+      tg_api('answerCallbackQuery', { callback_query_id: cb_id })
+    end
 
   # --- 3-QADAM: YO'NALISHNI (TOMONNI) TANLASH ---
   elsif data.start_with?('sel_dir:')
@@ -970,63 +1203,65 @@ end
 # CLOUD / RENDER WEB SERVICE HEALTHCHECK SERVER
 # ==============================================================================
 
-http_port = (ENV['PORT'] || 8080).to_i
-Thread.new do
-  server = TCPServer.new('0.0.0.0', http_port)
-  puts "🌐 Healthcheck HTTP server ishga tushdi: port #{http_port}"
-  loop do
-    client = server.accept
-    _req = client.gets
-    body = "TashBus Accurate Alert Bot 24/7 faol!\nServer vaqti: #{Time.now}\n"
-    res = "HTTP/1.1 200 OK\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Length: #{body.bytesize}\r\nConnection: close\r\n\r\n#{body}"
-    client.write(res)
-    client.close
-  rescue StandardError
-    # ignore
-  end
-rescue StandardError => e
-  puts "⚠️ Healthcheck server ogohlantirish: #{e.message}"
-end
-
-# ==============================================================================
-# MAIN POLLING LOOP
-# ==============================================================================
-
-puts 'TashBus Accurate Alert Bot ishga tushmoqda...'
-me = tg_api('getMe')
-if me['ok']
-  puts "✅ Bot ulandi: @#{me['result']['username']} (#{me['result']['first_name']})"
-else
-  puts "⚠️ Token xato yoki tarmoqqa ulanib bo'lmadi: #{me.inspect}"
-end
-
-offset = 0
-last_check = Time.now - 30
-
-loop do
-  res = tg_api('getUpdates', { offset: offset, timeout: 10 })
-  if res['ok'] && res['result'].is_a?(Array) && !res['result'].empty?
-    db = load_db
-    res['result'].each do |upd|
-      offset = upd['update_id'] + 1
-      if upd['message']
-        handle_message(db, upd['message'])
-      elsif upd['callback_query']
-        handle_callback(db, upd['callback_query'])
-      end
+if __FILE__ == $PROGRAM_NAME
+  http_port = (ENV['PORT'] || 8080).to_i
+  Thread.new do
+    server = TCPServer.new('0.0.0.0', http_port)
+    puts "🌐 Healthcheck HTTP server ishga tushdi: port #{http_port}"
+    loop do
+      client = server.accept
+      _req = client.gets
+      body = "TashBus Accurate Alert Bot 24/7 faol!\nServer vaqti: #{Time.now}\n"
+      res = "HTTP/1.1 200 OK\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Length: #{body.bytesize}\r\nConnection: close\r\n\r\n#{body}"
+      client.write(res)
+      client.close
+    rescue StandardError
+      # ignore
     end
-    save_db(db)
+  rescue StandardError => e
+    puts "⚠️ Healthcheck server ogohlantirish: #{e.message}"
   end
 
-  if Time.now - last_check >= 20
-    db = load_db
-    check_schedules(db)
-    last_check = Time.now
+  # ==============================================================================
+  # MAIN POLLING LOOP
+  # ==============================================================================
+
+  puts 'TashBus Accurate Alert Bot ishga tushmoqda...'
+  me = tg_api('getMe')
+  if me['ok']
+    puts "✅ Bot ulandi: @#{me['result']['username']} (#{me['result']['first_name']})"
+  else
+    puts "⚠️ Token xato yoki tarmoqqa ulanib bo'lmadi: #{me.inspect}"
   end
-rescue Interrupt
-  puts 'Bot to\'xtatildi.'
-  break
-rescue StandardError => e
-  puts "Xatolik: #{e.message}"
-  sleep 3
+
+  offset = 0
+  last_check = Time.now - 30
+
+  loop do
+    res = tg_api('getUpdates', { offset: offset, timeout: 10 })
+    if res['ok'] && res['result'].is_a?(Array) && !res['result'].empty?
+      db = load_db
+      res['result'].each do |upd|
+        offset = upd['update_id'] + 1
+        if upd['message']
+          handle_message(db, upd['message'])
+        elsif upd['callback_query']
+          handle_callback(db, upd['callback_query'])
+        end
+      end
+      save_db(db)
+    end
+
+    if Time.now - last_check >= 20
+      db = load_db
+      check_schedules(db)
+      last_check = Time.now
+    end
+  rescue Interrupt
+    puts 'Bot to\'xtatildi.'
+    break
+  rescue StandardError => e
+    puts "Xatolik: #{e.message}"
+    sleep 3
+  end
 end
