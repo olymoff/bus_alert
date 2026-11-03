@@ -30,312 +30,18 @@ DB_FILE = File.join(__dir__, 'bot_data.json')
 # BEKATLAR VA YO'NALISHLAR BAZASI (Ikki tomonlama aniq yo'nalishlar va avtobuslar)
 # ==============================================================================
 
-STATION_HUBS = {
-  'chustiy' => {
-    'display_name' => 'Nabixon Chustiy mahallasi',
-    'keywords' => %w[chustiy nabixon shayxontohur],
-    'directions' => {
-      'chustiy_chorsu' => {
-        'side_name' => "Chorsu / Markaz tomon",
-        'routes' => %w[11 28],
-        'lat' => 41.33285, 'lon' => 69.21842
-      },
-      'chustiy_beruniy' => {
-        'side_name' => "Beruniy / Ibn-Sino tomon",
-        'routes' => %w[11 28],
-        'lat' => 41.33312, 'lon' => 69.21815
-      }
-    }
-  },
-  'chorsu' => {
-    'display_name' => 'Chorsu bozori',
-    'keywords' => %w[chorsu xadra bozor],
-    'directions' => {
-      'chorsu_beruniy' => {
-        'side_name' => "Beruniy / Samarqand Darvoza tomon",
-        'routes' => %w[11 28 46 53 84],
-        'lat' => 41.32670, 'lon' => 69.23920
-      },
-      'chorsu_markaz' => {
-        'side_name' => "Alisher Navoiy / Paxtakor (Markaz) tomon",
-        'routes' => %w[11 28 44 46 53],
-        'lat' => 41.32680, 'lon' => 69.23980
-      }
-    }
-  },
-  'oybek' => {
-    'display_name' => 'Oybek / Ming O\'rik metrosi',
-    'keywords' => %w[oybek ming orik o'rik],
-    'directions' => {
-      'oybek_vokzal' => {
-        'side_name' => "Shimoliy vokzal / Qo'yliq tomon",
-        'routes' => %w[38 58 67 93],
-        'lat' => 41.29850, 'lon' => 69.27620
-      },
-      'oybek_kosmonavt' => {
-        'side_name' => "Kosmonavtlar / Chilonzor tomon",
-        'routes' => %w[38 58 67 93],
-        'lat' => 41.29890, 'lon' => 69.27580
-      }
-    }
-  },
-  'chilonzor' => {
-    'display_name' => 'Chilonzor metrosi',
-    'keywords' => %w[chilonzor metro],
-    'directions' => {
-      'chilonzor_markaz' => {
-        'side_name' => "Mirzo Ulug'bek / Markaz tomon",
-        'routes' => %w[38 40 84 98 118],
-        'lat' => 41.27270, 'lon' => 69.20450
-      },
-      'chilonzor_olmazor' => {
-        'side_name' => "Olmazor / Sergeli / Ippodrom tomon",
-        'routes' => %w[38 40 84 98 118],
-        'lat' => 41.27240, 'lon' => 69.20400
-      }
-    }
-  },
-  'farhod' => {
-    'display_name' => 'Farhod bozori',
-    'keywords' => %w[farhod farxod bozor],
-    'directions' => {
-      'farhod_chilonzor' => {
-        'side_name' => "Chilonzor metrosi / Janubiy vokzal tomon",
-        'routes' => %w[13 38 94 118],
-        'lat' => 41.27550, 'lon' => 69.18200
-      },
-      'farhod_uchtepa' => {
-        'side_name' => "Uchtepa / Nazarbek tomon",
-        'routes' => %w[13 38 94 118],
-        'lat' => 41.27580, 'lon' => 69.18150
-      }
-    }
-  },
-  'buyuk_ipak_yoli' => {
-    'display_name' => 'Buyuk Ipak Yo\'li metrosi (Maksim Gorkiy)',
-    'keywords' => %w[buyuk ipak yoli maksim gorkiy gorki],
-    'directions' => {
-      'biy_ttz' => {
-        'side_name' => "TTZ / Qorasuv tomon",
-        'routes' => %w[14 24 49 96 101],
-        'lat' => 41.32620, 'lon' => 69.32880
-      },
-      'biy_markaz' => {
-        'side_name' => "Pushkin / Amir Temur xiyoboni (Markaz) tomon",
-        'routes' => %w[14 24 49 96 101],
-        'lat' => 41.32650, 'lon' => 69.32820
-      }
-    }
-  },
-  'yunusobod' => {
-    'display_name' => 'Yunusobod bozori (Universam)',
-    'keywords' => %w[yunusobod universam megaplanet mega planet],
-    'directions' => {
-      'yunusobod_shahar' => {
-        'side_name' => "Shahriston / Shahar markazi tomon",
-        'routes' => %w[24 51 60 72 93],
-        'lat' => 41.36550, 'lon' => 69.29050
-      },
-      'yunusobod_19' => {
-        'side_name' => "19-kvartal / Hasanboy tomon",
-        'routes' => %w[24 51 60 72 93],
-        'lat' => 41.36580, 'lon' => 69.29000
-      }
-    }
-  },
-  'beruniy' => {
-    'display_name' => 'Beruniy metrosi (O\'zMU / TDTU)',
-    'keywords' => %w[beruniy ozmu tdtu talabalar],
-    'directions' => {
-      'beruniy_chorsu' => {
-        'side_name' => "Tinchlik / Chorsu tomon",
-        'routes' => %w[11 28 85 118],
-        'lat' => 41.34440, 'lon' => 69.20650
-      },
-      'beruniy_karvon' => {
-        'side_name' => "Qoraqamish / Karvon bozori tomon",
-        'routes' => %w[11 28 85 118],
-        'lat' => 41.34460, 'lon' => 69.20600
-      }
-    }
-  },
-  'amirtemur' => {
-    'display_name' => 'Amir Temur xiyoboni',
-    'keywords' => %w[amir temur xiyobon skver markaz],
-    'directions' => {
-      'skver_vokzal' => {
-        'side_name' => "Oybek / Shimoliy vokzal tomon",
-        'routes' => %w[14 28 38 58 67],
-        'lat' => 41.31200, 'lon' => 69.27900
-      },
-      'skver_chorsu' => {
-        'side_name' => "Navoiy / Chorsu tomon",
-        'routes' => %w[14 28 38 58 67],
-        'lat' => 41.31250, 'lon' => 69.27850
-      }
-    }
-  },
-  'shahriston' => {
-    'display_name' => 'Shahriston metrosi',
-    'keywords' => %w[shahriston shahristan metro],
-    'directions' => {
-      'shahriston_markaz' => {
-        'side_name' => "Bodomzor / Shahar markazi tomon",
-        'routes' => %w[51 72 93 97],
-        'lat' => 41.35370, 'lon' => 69.28820
-      },
-      'shahriston_universam' => {
-        'side_name' => "Yunusobod bozori (Universam) tomon",
-        'routes' => %w[51 72 93 97],
-        'lat' => 41.35400, 'lon' => 69.28780
-      }
-    }
-  },
-  'novza' => {
-    'display_name' => 'Novza metrosi (Hosil)',
-    'keywords' => %w[novza hosil chilonzor],
-    'directions' => {
-      'novza_markaz' => {
-        'side_name' => "Xalqlar do'stligi / Markaz tomon",
-        'routes' => %w[33 84 98],
-        'lat' => 41.28680, 'lon' => 69.22380
-      },
-      'novza_chilonzor' => {
-        'side_name' => "Mirzo Ulug'bek / Chilonzor metrosi tomon",
-        'routes' => %w[33 84 98],
-        'lat' => 41.28650, 'lon' => 69.22320
-      }
-    }
-  },
-  'tatu' => {
-    'display_name' => 'TATU / Moliya instituti bekati',
-    'keywords' => %w[tatu moliya institut teleminora],
-    'directions' => {
-      'tatu_markaz' => {
-        'side_name' => "Oloy bozori / Markaz tomon",
-        'routes' => %w[51 72 93],
-        'lat' => 41.34150, 'lon' => 69.28650
-      },
-      'tatu_shahriston' => {
-        'side_name' => "Shahriston / Yunusobod tomon",
-        'routes' => %w[51 72 93],
-        'lat' => 41.34180, 'lon' => 69.28600
-      }
-    }
-  },
-  'shimoliy_vokzal' => {
-    'display_name' => 'Toshkent Shimoliy vokzali (Severniy)',
-    'keywords' => %w[vokzal severniy shimoliy],
-    'directions' => {
-      'vokzal_markaz' => {
-        'side_name' => "Oybek / Amir Temur xiyoboni tomon",
-        'routes' => %w[14 26 60 80],
-        'lat' => 41.29250, 'lon' => 69.28580
-      },
-      'vokzal_qoyliq' => {
-        'side_name' => "Qo'yliq / Sariko'l tomon",
-        'routes' => %w[14 26 60 80],
-        'lat' => 41.29280, 'lon' => 69.28500
-      }
-    }
-  },
-  'qoyliq' => {
-    'display_name' => 'Qo\'yliq dehqon bozori',
-    'keywords' => %w[qoyliq qo'yliq bozor],
-    'directions' => {
-      'qoyliq_markaz' => {
-        'side_name' => "Shimoliy vokzal / Markaz tomon",
-        'routes' => %w[12 30 45 93 110],
-        'lat' => 41.23850, 'lon' => 69.33750
-      },
-      'qoyliq_rohat' => {
-        'side_name' => "Rohat / Yangiobod tomon",
-        'routes' => %w[12 30 45 93 110],
-        'lat' => 41.23880, 'lon' => 69.33700
-      }
-    }
-  },
-  'qipchoq' => {
-    'display_name' => 'Qipchoq (Sergeli) metrosi',
-    'keywords' => %w[qipchoq sergeli metro],
-    'directions' => {
-      'qipchoq_chilonzor' => {
-        'side_name' => "Olmazor / Chilonzor tomon",
-        'routes' => %w[38 40 86 130],
-        'lat' => 41.20950, 'lon' => 69.21550
-      },
-      'qipchoq_quruvchilar' => {
-        'side_name' => "Quruvchilar / Yangihayot tomon",
-        'routes' => %w[38 40 86 130],
-        'lat' => 41.20920, 'lon' => 69.21500
-      }
-    }
-  },
-  'paxtakor' => {
-    'display_name' => 'Alisher Navoiy / Paxtakor metrosi',
-    'keywords' => %w[paxtakor navoiy alisher],
-    'directions' => {
-      'paxtakor_chorsu' => {
-        'side_name' => "Chorsu / Xadra tomon",
-        'routes' => %w[11 28 44 57],
-        'lat' => 41.32040, 'lon' => 69.25580
-      },
-      'paxtakor_oybek' => {
-        'side_name' => "Oybek / Amir Temur tomon",
-        'routes' => %w[11 28 44 57],
-        'lat' => 41.32070, 'lon' => 69.25500
-      }
-    }
-  },
-  'tinchlik' => {
-    'display_name' => 'Tinchlik metrosi bekati',
-    'keywords' => %w[tinchlik metro olmazaor],
-    'directions' => {
-      'tinchlik_chorsu' => {
-        'side_name' => "Chorsu tomon",
-        'routes' => %w[11 28 46],
-        'lat' => 41.33520, 'lon' => 69.21450
-      },
-      'tinchlik_beruniy' => {
-        'side_name' => "Beruniy tomon",
-        'routes' => %w[11 28 46],
-        'lat' => 41.33550, 'lon' => 69.21400
-      }
-    }
-  },
-  'kosmonavtlar' => {
-    'display_name' => 'Kosmonavtlar metrosi bekati',
-    'keywords' => %w[kosmonavt kosmonavtlar metro],
-    'directions' => {
-      'kosmonavt_markaz' => {
-        'side_name' => "Mustaqillik maydoni / Markaz tomon",
-        'routes' => %w[38 57 67],
-        'lat' => 41.30750, 'lon' => 69.26120
-      },
-      'kosmonavt_oybek' => {
-        'side_name' => "Oybek / Yakkasaroy tomon",
-        'routes' => %w[38 57 67],
-        'lat' => 41.30720, 'lon' => 69.26080
-      }
-    }
-  },
-  'janubiy_vokzal' => {
-    'display_name' => 'Toshkent Janubiy vokzali bekati',
-    'keywords' => %w[janubiy vokzal yakkasaroy],
-    'directions' => {
-      'janubiy_chilonzor' => {
-        'side_name' => "Chilonzor / Uchtepa tomon",
-        'routes' => %w[40 86 118],
-        'lat' => 41.26850, 'lon' => 69.22700
-      },
-      'janubiy_markaz' => {
-        'side_name' => "Shahar markazi / Oybek tomon",
-        'routes' => %w[40 86 118],
-        'lat' => 41.26880, 'lon' => 69.22650
-      }
-    }
-  }
-}
+STOPS_FILE = File.join(__dir__, 'tashkent_stops.json')
+STATION_HUBS = begin
+  if File.exist?(STOPS_FILE)
+    JSON.parse(File.read(STOPS_FILE, encoding: 'UTF-8'))
+  else
+    puts "⚠️ Diqqat: tashkent_stops.json topilmadi!"
+    {}
+  end
+rescue StandardError => e
+  puts "⚠️ Bekatlar bazasini yuklashda xatolik: #{e.message}"
+  {}
+end
 
 WEEKDAYS_UZ = {
   1 => 'Dushanba',
@@ -406,19 +112,27 @@ def find_nearest_hub(lat, lon)
   { 'hub_key' => best_key, 'hub' => best_hub, 'dir' => best_dir, 'distance_km' => min_d.round(2) }
 end
 
+def normalize_text(str)
+  str.to_s.downcase.gsub(/['`‘’ʻ"-]/, '').strip
+end
+
 def search_hubs(query)
-  q = query.to_s.downcase.strip
-  return [] if q.empty?
+  raw_q = query.to_s.downcase.strip
+  norm_q = normalize_text(query)
+  return [] if norm_q.empty?
 
   matches = []
   STATION_HUBS.each do |k, v|
-    name = v['display_name'].downcase
-    keys = v['keywords'].map(&:downcase)
-    if name.include?(q) || keys.any? { |kw| kw.include?(q) || q.include?(kw) }
+    name = v['display_name'].to_s.downcase
+    norm_name = normalize_text(name)
+    dist = v['district'].to_s.downcase
+    keys = (v['keywords'] || []).map { |kw| normalize_text(kw) }
+
+    if norm_name.include?(norm_q) || dist.include?(raw_q) || keys.any? { |kw| kw.include?(norm_q) || norm_q.include?(kw) }
       matches << v.merge('hub_key' => k)
     end
   end
-  matches.first(5)
+  matches.first(6)
 end
 
 def fetch_bus_arrivals(bus_numbers)

@@ -1,0 +1,1678 @@
+{
+  "chustiy": {
+    "display_name": "Nabixon Chustiy mahallasi",
+    "district": "Shayxontohur",
+    "keywords": [
+      "chustiy",
+      "nabixon",
+      "shayxontohur",
+      "beltepa"
+    ],
+    "directions": {
+      "chustiy_chorsu": {
+        "side_name": "Chorsu / Markaz tomon",
+        "routes": [
+          "11",
+          "28"
+        ],
+        "lat": 41.33285,
+        "lon": 69.21842
+      },
+      "chustiy_beruniy": {
+        "side_name": "Beruniy / Ibn-Sino tomon",
+        "routes": [
+          "11",
+          "28"
+        ],
+        "lat": 41.33312,
+        "lon": 69.21815
+      }
+    }
+  },
+  "chorsu": {
+    "display_name": "Chorsu bozori",
+    "district": "Shayxontohur",
+    "keywords": [
+      "chorsu",
+      "xadra",
+      "bozor",
+      "eskijuva",
+      "eski",
+      "juva"
+    ],
+    "directions": {
+      "chorsu_beruniy": {
+        "side_name": "Beruniy / Samarqand Darvoza tomon",
+        "routes": [
+          "11",
+          "28",
+          "46",
+          "53",
+          "84",
+          "118"
+        ],
+        "lat": 41.3267,
+        "lon": 69.2392
+      },
+      "chorsu_markaz": {
+        "side_name": "Paxtakor / Alisher Navoiy (Markaz) tomon",
+        "routes": [
+          "11",
+          "28",
+          "44",
+          "46",
+          "53",
+          "57",
+          "85"
+        ],
+        "lat": 41.3268,
+        "lon": 69.2398
+      }
+    }
+  },
+  "paxtakor": {
+    "display_name": "Alisher Navoiy / Paxtakor metrosi",
+    "district": "Shayxontohur",
+    "keywords": [
+      "paxtakor",
+      "navoiy",
+      "alisher",
+      "stadion"
+    ],
+    "directions": {
+      "paxtakor_chorsu": {
+        "side_name": "Chorsu / Beruniy tomon",
+        "routes": [
+          "11",
+          "28",
+          "44",
+          "57",
+          "85"
+        ],
+        "lat": 41.3204,
+        "lon": 69.2558
+      },
+      "paxtakor_oybek": {
+        "side_name": "Amir Temur / Oybek tomon",
+        "routes": [
+          "11",
+          "28",
+          "44",
+          "57",
+          "85"
+        ],
+        "lat": 41.3207,
+        "lon": 69.255
+      }
+    }
+  },
+  "samarqand_darvoza": {
+    "display_name": "Samarqand Darvoza SAVDO markazi",
+    "district": "Shayxontohur",
+    "keywords": [
+      "samarqand",
+      "darvoza",
+      "mall",
+      "korzinka",
+      "qoratosh"
+    ],
+    "directions": {
+      "sam_darvoza_chorsu": {
+        "side_name": "Chorsu bozori tomon",
+        "routes": [
+          "32",
+          "46",
+          "53",
+          "84",
+          "118"
+        ],
+        "lat": 41.3168,
+        "lon": 69.2312
+      },
+      "sam_darvoza_chilonzor": {
+        "side_name": "Oqtepa / Chilonzor tomon",
+        "routes": [
+          "32",
+          "46",
+          "53",
+          "84",
+          "118"
+        ],
+        "lat": 41.3165,
+        "lon": 69.2318
+      }
+    }
+  },
+  "ibn_sino": {
+    "display_name": "Ibn Sino 1/2 mavzelari",
+    "district": "Shayxontohur",
+    "keywords": [
+      "ibn",
+      "sino",
+      "ibnsino",
+      "jarariq",
+      "jarariq"
+    ],
+    "directions": {
+      "ibnsino_beruniy": {
+        "side_name": "Beruniy / Chorsu tomon",
+        "routes": [
+          "11",
+          "28",
+          "85"
+        ],
+        "lat": 41.3412,
+        "lon": 69.1765
+      },
+      "ibnsino_beltepa": {
+        "side_name": "Beltepa / Shahar cheti tomon",
+        "routes": [
+          "11",
+          "28",
+          "85"
+        ],
+        "lat": 41.3415,
+        "lon": 69.176
+      }
+    }
+  },
+  "maktab_41": {
+    "display_name": "41-Maktab bekati (Shayxontohur)",
+    "district": "Shayxontohur",
+    "keywords": [
+      "41",
+      "maktab",
+      "maktab41",
+      "shayxontohur"
+    ],
+    "directions": {
+      "maktab41_chorsu": {
+        "side_name": "Chorsu tomon",
+        "routes": [
+          "11",
+          "28"
+        ],
+        "lat": 41.33041,
+        "lon": 69.22489
+      },
+      "maktab41_beruniy": {
+        "side_name": "Beruniy tomon",
+        "routes": [
+          "11",
+          "28"
+        ],
+        "lat": 41.3306,
+        "lon": 69.2245
+      }
+    }
+  },
+  "chilonzor": {
+    "display_name": "Chilonzor metrosi bekati",
+    "district": "Chilonzor",
+    "keywords": [
+      "chilonzor",
+      "metro",
+      "chilonzor20",
+      "chilonzor25"
+    ],
+    "directions": {
+      "chilonzor_markaz": {
+        "side_name": "Mirzo Ulug'bek / Markaz tomon",
+        "routes": [
+          "1",
+          "8",
+          "18",
+          "38",
+          "40",
+          "84",
+          "98",
+          "118"
+        ],
+        "lat": 41.2727,
+        "lon": 69.2045
+      },
+      "chilonzor_olmazor": {
+        "side_name": "Olmazor / Ippodrom / Sergeli tomon",
+        "routes": [
+          "1",
+          "8",
+          "18",
+          "38",
+          "40",
+          "84",
+          "98",
+          "118"
+        ],
+        "lat": 41.2724,
+        "lon": 69.204
+      }
+    }
+  },
+  "novza": {
+    "display_name": "Novza metrosi (Hosil)",
+    "district": "Chilonzor",
+    "keywords": [
+      "novza",
+      "hosil",
+      "chilonzor",
+      "rayon",
+      "xalqlar"
+    ],
+    "directions": {
+      "novza_markaz": {
+        "side_name": "Xalqlar do'stligi / Markaz tomon",
+        "routes": [
+          "33",
+          "84",
+          "98",
+          "118"
+        ],
+        "lat": 41.2868,
+        "lon": 69.2238
+      },
+      "novza_chilonzor": {
+        "side_name": "Mirzo Ulug'bek / Chilonzor metrosi tomon",
+        "routes": [
+          "33",
+          "84",
+          "98",
+          "118"
+        ],
+        "lat": 41.2865,
+        "lon": 69.2232
+      }
+    }
+  },
+  "mirzo_ulugbek_metro": {
+    "display_name": "Mirzo Ulug'bek metrosi (Bunyodkor stadioni)",
+    "district": "Chilonzor",
+    "keywords": [
+      "bunyodkor",
+      "stadion",
+      "mirzo",
+      "ulugbek",
+      "milliy"
+    ],
+    "directions": {
+      "mulugbek_markaz": {
+        "side_name": "Novza / Shahar markazi tomon",
+        "routes": [
+          "38",
+          "40",
+          "84",
+          "118"
+        ],
+        "lat": 41.2798,
+        "lon": 69.2135
+      },
+      "mulugbek_chilonzor": {
+        "side_name": "Chilonzor metrosi tomon",
+        "routes": [
+          "38",
+          "40",
+          "84",
+          "118"
+        ],
+        "lat": 41.2795,
+        "lon": 69.213
+      }
+    }
+  },
+  "oqtepa": {
+    "display_name": "Oqtepa maydoni bekati",
+    "district": "Chilonzor",
+    "keywords": [
+      "oqtepa",
+      "oq",
+      "tepa",
+      "aqltepa",
+      "lavash"
+    ],
+    "directions": {
+      "oqtepa_chorsu": {
+        "side_name": "Samarqand Darvoza / Chorsu tomon",
+        "routes": [
+          "32",
+          "46",
+          "84",
+          "118"
+        ],
+        "lat": 41.3032,
+        "lon": 69.2215
+      },
+      "oqtepa_farhod": {
+        "side_name": "Farhod bozori / Uchtepa tomon",
+        "routes": [
+          "32",
+          "46",
+          "84",
+          "118"
+        ],
+        "lat": 41.303,
+        "lon": 69.221
+      }
+    }
+  },
+  "olmazor_metro": {
+    "display_name": "Olmazor metrosi (Sobir Rahimov)",
+    "district": "Chilonzor",
+    "keywords": [
+      "olmazor",
+      "metro",
+      "sobir",
+      "rahimov",
+      "avtovokzal"
+    ],
+    "directions": {
+      "olmazor_markaz": {
+        "side_name": "Chilonzor metrosi / Markaz tomon",
+        "routes": [
+          "30",
+          "38",
+          "56",
+          "84",
+          "86",
+          "115"
+        ],
+        "lat": 41.2562,
+        "lon": 69.1978
+      },
+      "olmazor_ippodrom": {
+        "side_name": "Ippodrom / Abu Saxiy / Erkin tomon",
+        "routes": [
+          "30",
+          "38",
+          "56",
+          "84",
+          "86",
+          "115"
+        ],
+        "lat": 41.256,
+        "lon": 69.1972
+      }
+    }
+  },
+  "dombrobod": {
+    "display_name": "Do'mbrobod bekati (Qabriston)",
+    "district": "Chilonzor",
+    "keywords": [
+      "dombrobod",
+      "do'mbrobod",
+      "dombrabad"
+    ],
+    "directions": {
+      "dombrobod_shahar": {
+        "side_name": "Chilonzor / Shahar markazi tomon",
+        "routes": [
+          "40",
+          "53",
+          "84",
+          "118"
+        ],
+        "lat": 41.2645,
+        "lon": 69.2132
+      },
+      "dombrobod_sergeli": {
+        "side_name": "Sergeli / Yangihayot tomon",
+        "routes": [
+          "40",
+          "53",
+          "84",
+          "118"
+        ],
+        "lat": 41.2642,
+        "lon": 69.2138
+      }
+    }
+  },
+  "yunusobod": {
+    "display_name": "Yunusobod bozori (Universam)",
+    "district": "Yunusobod",
+    "keywords": [
+      "yunusobod",
+      "universam",
+      "megaplanet",
+      "mega",
+      "planet",
+      "bazar"
+    ],
+    "directions": {
+      "yunusobod_markaz": {
+        "side_name": "Shahriston / Shahar markazi tomon",
+        "routes": [
+          "24",
+          "51",
+          "60",
+          "72",
+          "93",
+          "97"
+        ],
+        "lat": 41.3655,
+        "lon": 69.2905
+      },
+      "yunusobod_19": {
+        "side_name": "19-kvartal / Hasanboy tomon",
+        "routes": [
+          "24",
+          "51",
+          "60",
+          "72",
+          "93",
+          "97"
+        ],
+        "lat": 41.3658,
+        "lon": 69.29
+      }
+    }
+  },
+  "shahriston": {
+    "display_name": "Shahriston metrosi (Habib Abdullayev)",
+    "district": "Yunusobod",
+    "keywords": [
+      "shahriston",
+      "shahristan",
+      "habib",
+      "abdullayev",
+      "metro"
+    ],
+    "directions": {
+      "shahriston_markaz": {
+        "side_name": "Bodomzor / Oloy bozori tomon",
+        "routes": [
+          "51",
+          "72",
+          "93",
+          "97"
+        ],
+        "lat": 41.3537,
+        "lon": 69.2882
+      },
+      "shahriston_universam": {
+        "side_name": "Yunusobod Universam tomon",
+        "routes": [
+          "51",
+          "72",
+          "93",
+          "97"
+        ],
+        "lat": 41.354,
+        "lon": 69.2878
+      }
+    }
+  },
+  "bodomzor": {
+    "display_name": "Bodomzor metrosi (O'zekspomarkaz)",
+    "district": "Yunusobod",
+    "keywords": [
+      "bodomzor",
+      "badamzar",
+      "ekspomarkaz",
+      "akvapark",
+      "intercontinental"
+    ],
+    "directions": {
+      "bodomzor_markaz": {
+        "side_name": "Oloy bozori / Amir Temur tomon",
+        "routes": [
+          "24",
+          "72",
+          "93"
+        ],
+        "lat": 41.3364,
+        "lon": 69.2842
+      },
+      "bodomzor_shahriston": {
+        "side_name": "Shahriston / Yunusobod tomon",
+        "routes": [
+          "24",
+          "72",
+          "93"
+        ],
+        "lat": 41.3367,
+        "lon": 69.2838
+      }
+    }
+  },
+  "tatu": {
+    "display_name": "TATU / Moliya instituti bekati",
+    "district": "Yunusobod",
+    "keywords": [
+      "tatu",
+      "moliya",
+      "institut",
+      "teleminora",
+      "firdavsiy"
+    ],
+    "directions": {
+      "tatu_markaz": {
+        "side_name": "Oloy bozori / Markaz tomon",
+        "routes": [
+          "51",
+          "72",
+          "93"
+        ],
+        "lat": 41.3415,
+        "lon": 69.2865
+      },
+      "tatu_shahriston": {
+        "side_name": "Shahriston / Universam tomon",
+        "routes": [
+          "51",
+          "72",
+          "93"
+        ],
+        "lat": 41.3418,
+        "lon": 69.286
+      }
+    }
+  },
+  "oloy_bozori": {
+    "display_name": "Oloy bozori bekati",
+    "district": "Yunusobod",
+    "keywords": [
+      "oloy",
+      "alay",
+      "alayskiy",
+      "bozor",
+      "abdulla",
+      "qodiriy"
+    ],
+    "directions": {
+      "oloy_markaz": {
+        "side_name": "Amir Temur xiyoboni tomon",
+        "routes": [
+          "17",
+          "51",
+          "60",
+          "72",
+          "93"
+        ],
+        "lat": 41.3218,
+        "lon": 69.2825
+      },
+      "oloy_yunusobod": {
+        "side_name": "Bodomzor / Yunusobod tomon",
+        "routes": [
+          "17",
+          "51",
+          "60",
+          "72",
+          "93"
+        ],
+        "lat": 41.322,
+        "lon": 69.282
+      }
+    }
+  },
+  "minor_metro": {
+    "display_name": "Minor metrosi bekati",
+    "district": "Yunusobod",
+    "keywords": [
+      "minor",
+      "masjid",
+      "gidromet",
+      "labzak"
+    ],
+    "directions": {
+      "minor_markaz": {
+        "side_name": "Oloy bozori / Shahar markazi tomon",
+        "routes": [
+          "51",
+          "72",
+          "93"
+        ],
+        "lat": 41.3285,
+        "lon": 69.2835
+      },
+      "minor_yunusobod": {
+        "side_name": "Bodomzor / Shahriston tomon",
+        "routes": [
+          "51",
+          "72",
+          "93"
+        ],
+        "lat": 41.3288,
+        "lon": 69.283
+      }
+    }
+  },
+  "buyuk_ipak_yoli": {
+    "display_name": "Buyuk Ipak Yo'li metrosi (Maksim Gorkiy)",
+    "district": "Mirzo Ulug'bek",
+    "keywords": [
+      "buyuk",
+      "ipak",
+      "yoli",
+      "maksim",
+      "gorkiy",
+      "gorki",
+      "metro"
+    ],
+    "directions": {
+      "biy_ttz": {
+        "side_name": "TTZ / Qorasuv tomon",
+        "routes": [
+          "14",
+          "24",
+          "49",
+          "72",
+          "96",
+          "101"
+        ],
+        "lat": 41.3262,
+        "lon": 69.3288
+      },
+      "biy_markaz": {
+        "side_name": "Pushkin / Amir Temur xiyoboni tomon",
+        "routes": [
+          "14",
+          "24",
+          "49",
+          "72",
+          "96",
+          "101"
+        ],
+        "lat": 41.3265,
+        "lon": 69.3282
+      }
+    }
+  },
+  "pushkin": {
+    "display_name": "Pushkin / Salor bekati",
+    "district": "Mirzo Ulug'bek",
+    "keywords": [
+      "pushkin",
+      "salor",
+      "inha",
+      "parkent"
+    ],
+    "directions": {
+      "pushkin_markaz": {
+        "side_name": "Amir Temur xiyoboni / Markaz tomon",
+        "routes": [
+          "14",
+          "24",
+          "96"
+        ],
+        "lat": 41.3205,
+        "lon": 69.308
+      },
+      "pushkin_biy": {
+        "side_name": "Buyuk Ipak Yo'li / TTZ tomon",
+        "routes": [
+          "14",
+          "24",
+          "96"
+        ],
+        "lat": 41.3208,
+        "lon": 69.3075
+      }
+    }
+  },
+  "ttz_bozori": {
+    "display_name": "TTZ bozori (Traktor zavodi)",
+    "district": "Mirzo Ulug'bek",
+    "keywords": [
+      "ttz",
+      "traktor",
+      "zavod",
+      "bozor",
+      "korzinka",
+      "ttz"
+    ],
+    "directions": {
+      "ttz_markaz": {
+        "side_name": "Buyuk Ipak Yo'li / Shahar markazi tomon",
+        "routes": [
+          "2",
+          "14",
+          "38",
+          "49",
+          "101"
+        ],
+        "lat": 41.357,
+        "lon": 69.378
+      },
+      "ttz_chirchiq": {
+        "side_name": "Qorasuv / Chirchiq yo'li tomon",
+        "routes": [
+          "2",
+          "14",
+          "38",
+          "49",
+          "101"
+        ],
+        "lat": 41.3575,
+        "lon": 69.3775
+      }
+    }
+  },
+  "qorasuv": {
+    "display_name": "Qorasuv 1-6 mavzelari",
+    "district": "Mirzo Ulug'bek",
+    "keywords": [
+      "qorasuv",
+      "karasu",
+      "qorasuv1",
+      "qorasuv6",
+      "avtoshkola"
+    ],
+    "directions": {
+      "qorasuv_biy": {
+        "side_name": "Buyuk Ipak Yo'li / Markaz tomon",
+        "routes": [
+          "14",
+          "49",
+          "94",
+          "101"
+        ],
+        "lat": 41.3385,
+        "lon": 69.352
+      },
+      "qorasuv_ttz": {
+        "side_name": "TTZ / Do'rmon tomon",
+        "routes": [
+          "14",
+          "49",
+          "94",
+          "101"
+        ],
+        "lat": 41.3388,
+        "lon": 69.3515
+      }
+    }
+  },
+  "parkent_bozori": {
+    "display_name": "Parkent bozori bekati",
+    "district": "Mirzo Ulug'bek",
+    "keywords": [
+      "parkent",
+      "parkentskiy",
+      "bozor",
+      "aviashahar"
+    ],
+    "directions": {
+      "parkent_markaz": {
+        "side_name": "Amir Temur / Shahar markazi tomon",
+        "routes": [
+          "14",
+          "15",
+          "28",
+          "44",
+          "96"
+        ],
+        "lat": 41.3125,
+        "lon": 69.314
+      },
+      "parkent_biy": {
+        "side_name": "Buyuk Ipak Yo'li / Rohat tomon",
+        "routes": [
+          "14",
+          "15",
+          "28",
+          "44",
+          "96"
+        ],
+        "lat": 41.3128,
+        "lon": 69.3135
+      }
+    }
+  },
+  "oybek": {
+    "display_name": "Oybek / Ming O'rik metrosi",
+    "district": "Mirobod",
+    "keywords": [
+      "oybek",
+      "ming",
+      "orik",
+      "o'rik",
+      "mirabad"
+    ],
+    "directions": {
+      "oybek_vokzal": {
+        "side_name": "Shimoliy vokzal / Qo'yliq tomon",
+        "routes": [
+          "38",
+          "58",
+          "67",
+          "93"
+        ],
+        "lat": 41.2985,
+        "lon": 69.2762
+      },
+      "oybek_kosmonavt": {
+        "side_name": "Kosmonavtlar / Chilonzor tomon",
+        "routes": [
+          "38",
+          "58",
+          "67",
+          "93"
+        ],
+        "lat": 41.2989,
+        "lon": 69.2758
+      }
+    }
+  },
+  "amirtemur": {
+    "display_name": "Amir Temur xiyoboni (Skver)",
+    "district": "Mirobod",
+    "keywords": [
+      "amir",
+      "temur",
+      "xiyobon",
+      "skver",
+      "markaz",
+      "forum"
+    ],
+    "directions": {
+      "skver_vokzal": {
+        "side_name": "Oybek / Shimoliy vokzal tomon",
+        "routes": [
+          "14",
+          "28",
+          "38",
+          "58",
+          "67"
+        ],
+        "lat": 41.312,
+        "lon": 69.279
+      },
+      "skver_chorsu": {
+        "side_name": "Alisher Navoiy / Chorsu tomon",
+        "routes": [
+          "14",
+          "28",
+          "38",
+          "58",
+          "67"
+        ],
+        "lat": 41.3125,
+        "lon": 69.2785
+      }
+    }
+  },
+  "shimoliy_vokzal": {
+    "display_name": "Toshkent Shimoliy vokzali (Severniy)",
+    "district": "Mirobod",
+    "keywords": [
+      "vokzal",
+      "severniy",
+      "shimoliy",
+      "vokzal",
+      "temir",
+      "yol",
+      "vokzali"
+    ],
+    "directions": {
+      "vokzal_markaz": {
+        "side_name": "Oybek / Amir Temur xiyoboni tomon",
+        "routes": [
+          "5",
+          "14",
+          "26",
+          "60",
+          "80",
+          "93"
+        ],
+        "lat": 41.2925,
+        "lon": 69.2858
+      },
+      "vokzal_qoyliq": {
+        "side_name": "Sariko'l / Qo'yliq tomon",
+        "routes": [
+          "5",
+          "14",
+          "26",
+          "60",
+          "80",
+          "93"
+        ],
+        "lat": 41.2928,
+        "lon": 69.285
+      }
+    }
+  },
+  "gospitalniy": {
+    "display_name": "Mirobod bozori (Gospitalniy)",
+    "district": "Mirobod",
+    "keywords": [
+      "gospital",
+      "gospitalniy",
+      "mirobod",
+      "bozor",
+      "chexov"
+    ],
+    "directions": {
+      "gospital_vokzal": {
+        "side_name": "Shimoliy vokzal tomon",
+        "routes": [
+          "38",
+          "58",
+          "67"
+        ],
+        "lat": 41.2952,
+        "lon": 69.2725
+      },
+      "gospital_markaz": {
+        "side_name": "Kosmonavtlar / Shahar markazi tomon",
+        "routes": [
+          "38",
+          "58",
+          "67"
+        ],
+        "lat": 41.2955,
+        "lon": 69.272
+      }
+    }
+  },
+  "kosmonavtlar": {
+    "display_name": "Kosmonavtlar metrosi bekati",
+    "district": "Yakkasaroy",
+    "keywords": [
+      "kosmonavt",
+      "kosmonavtlar",
+      "iiv",
+      "interpolyar"
+    ],
+    "directions": {
+      "kosmonavt_markaz": {
+        "side_name": "Mustaqillik maydoni / Markaz tomon",
+        "routes": [
+          "38",
+          "57",
+          "67"
+        ],
+        "lat": 41.3075,
+        "lon": 69.2612
+      },
+      "kosmonavt_oybek": {
+        "side_name": "Oybek / Yakkasaroy tomon",
+        "routes": [
+          "38",
+          "57",
+          "67"
+        ],
+        "lat": 41.3072,
+        "lon": 69.2608
+      }
+    }
+  },
+  "janubiy_vokzal": {
+    "display_name": "Toshkent Janubiy vokzali (Yujniy)",
+    "district": "Yakkasaroy",
+    "keywords": [
+      "janubiy",
+      "yujniy",
+      "vokzal",
+      "usmon",
+      "nosir",
+      "rustaveli"
+    ],
+    "directions": {
+      "janubiy_chilonzor": {
+        "side_name": "Chilonzor / Uchtepa tomon",
+        "routes": [
+          "12",
+          "13",
+          "40",
+          "86",
+          "118",
+          "130"
+        ],
+        "lat": 41.2685,
+        "lon": 69.227
+      },
+      "janubiy_markaz": {
+        "side_name": "Shota Rustaveli / Markaz tomon",
+        "routes": [
+          "12",
+          "13",
+          "40",
+          "86",
+          "118",
+          "130"
+        ],
+        "lat": 41.2688,
+        "lon": 69.2265
+      }
+    }
+  },
+  "grand_mir": {
+    "display_name": "Grand Mir Hotel (Rossiya mehmonxonasi)",
+    "district": "Yakkasaroy",
+    "keywords": [
+      "grand",
+      "mir",
+      "rossiya",
+      "mehmonxona",
+      "shota",
+      "rustaveli"
+    ],
+    "directions": {
+      "grandmir_vokzal": {
+        "side_name": "Shimoliy vokzal tomon",
+        "routes": [
+          "38",
+          "58",
+          "67"
+        ],
+        "lat": 41.2965,
+        "lon": 69.268
+      },
+      "grandmir_kosmonavt": {
+        "side_name": "Kosmonavtlar / Markaz tomon",
+        "routes": [
+          "38",
+          "58",
+          "67"
+        ],
+        "lat": 41.2968,
+        "lon": 69.2675
+      }
+    }
+  },
+  "rakat": {
+    "display_name": "Rakat mahallasi bekati",
+    "district": "Yakkasaroy",
+    "keywords": [
+      "rakat",
+      "rakatboshi",
+      "toqimachi",
+      "yakkasaroy"
+    ],
+    "directions": {
+      "rakat_markaz": {
+        "side_name": "Shahar markazi tomon",
+        "routes": [
+          "57",
+          "67",
+          "80"
+        ],
+        "lat": 41.2885,
+        "lon": 69.2542
+      },
+      "rakat_janubiy": {
+        "side_name": "Janubiy vokzal tomon",
+        "routes": [
+          "57",
+          "67",
+          "80"
+        ],
+        "lat": 41.2888,
+        "lon": 69.2538
+      }
+    }
+  },
+  "farhod": {
+    "display_name": "Farhod bozori bekati",
+    "district": "Uchtepa",
+    "keywords": [
+      "farhod",
+      "farxod",
+      "foziltepa",
+      "bozor",
+      "uchtepa"
+    ],
+    "directions": {
+      "farhod_chilonzor": {
+        "side_name": "Chilonzor metrosi / Janubiy vokzal tomon",
+        "routes": [
+          "13",
+          "38",
+          "94",
+          "118"
+        ],
+        "lat": 41.2755,
+        "lon": 69.182
+      },
+      "farhod_uchtepa": {
+        "side_name": "Uchtepa / O'rikzor tomon",
+        "routes": [
+          "13",
+          "38",
+          "94",
+          "118"
+        ],
+        "lat": 41.2758,
+        "lon": 69.1815
+      }
+    }
+  },
+  "orikzor": {
+    "display_name": "O'rikzor bozori bekati",
+    "district": "Uchtepa",
+    "keywords": [
+      "orikzor",
+      "o'rikzor",
+      "urikzor",
+      "bozor",
+      "optom",
+      "halqa"
+    ],
+    "directions": {
+      "orikzor_farhod": {
+        "side_name": "Farhod bozori / Chilonzor tomon",
+        "routes": [
+          "13",
+          "38",
+          "84",
+          "118"
+        ],
+        "lat": 41.2912,
+        "lon": 69.1455
+      },
+      "orikzor_halqa": {
+        "side_name": "Halqa yo'li / Nazarbek tomon",
+        "routes": [
+          "13",
+          "38",
+          "84",
+          "118"
+        ],
+        "lat": 41.2915,
+        "lon": 69.145
+      }
+    }
+  },
+  "uchtepa_hokimiyat": {
+    "display_name": "Uchtepa hokimiyati bekati",
+    "district": "Uchtepa",
+    "keywords": [
+      "uchtepa",
+      "hokimiyat",
+      "vatan",
+      "kinoteatr",
+      "lutfiy"
+    ],
+    "directions": {
+      "uchtepa_chilonzor": {
+        "side_name": "Chilonzor metrosi tomon",
+        "routes": [
+          "13",
+          "38",
+          "94"
+        ],
+        "lat": 41.2825,
+        "lon": 69.172
+      },
+      "uchtepa_orikzor": {
+        "side_name": "O'rikzor bozori tomon",
+        "routes": [
+          "13",
+          "38",
+          "94"
+        ],
+        "lat": 41.2828,
+        "lon": 69.1715
+      }
+    }
+  },
+  "beruniy": {
+    "display_name": "Beruniy metrosi (O'zMU / TDTU)",
+    "district": "Olmazor",
+    "keywords": [
+      "beruniy",
+      "ozmu",
+      "tdtu",
+      "talabalar",
+      "shaharchasi",
+      "vuzgorodok"
+    ],
+    "directions": {
+      "beruniy_chorsu": {
+        "side_name": "Tinchlik / Chorsu tomon",
+        "routes": [
+          "11",
+          "28",
+          "85",
+          "118"
+        ],
+        "lat": 41.3444,
+        "lon": 69.2065
+      },
+      "beruniy_karvon": {
+        "side_name": "Qoraqamish / Karvon bozori tomon",
+        "routes": [
+          "11",
+          "28",
+          "85",
+          "118"
+        ],
+        "lat": 41.3446,
+        "lon": 69.206
+      }
+    }
+  },
+  "tinchlik": {
+    "display_name": "Tinchlik metrosi bekati",
+    "district": "Olmazor",
+    "keywords": [
+      "tinchlik",
+      "metro",
+      "olmazaor",
+      "guzar",
+      "beruniy"
+    ],
+    "directions": {
+      "tinchlik_chorsu": {
+        "side_name": "Chorsu tomon",
+        "routes": [
+          "11",
+          "28",
+          "46",
+          "84"
+        ],
+        "lat": 41.3352,
+        "lon": 69.2145
+      },
+      "tinchlik_beruniy": {
+        "side_name": "Beruniy tomon",
+        "routes": [
+          "11",
+          "28",
+          "46",
+          "84"
+        ],
+        "lat": 41.3355,
+        "lon": 69.214
+      }
+    }
+  },
+  "qoraqamish": {
+    "display_name": "Qoraqamish 2/4 mavzesi",
+    "district": "Olmazor",
+    "keywords": [
+      "qoraqamish",
+      "karakamish",
+      "tansiqboyev",
+      "shifoxona"
+    ],
+    "directions": {
+      "qoraqamish_beruniy": {
+        "side_name": "Beruniy / Shahar markazi tomon",
+        "routes": [
+          "17",
+          "33",
+          "76",
+          "85"
+        ],
+        "lat": 41.3615,
+        "lon": 69.1985
+      },
+      "qoraqamish_halqa": {
+        "side_name": "Keles / Halqa yo'li tomon",
+        "routes": [
+          "17",
+          "33",
+          "76",
+          "85"
+        ],
+        "lat": 41.3618,
+        "lon": 69.198
+      }
+    }
+  },
+  "galaba_bogi": {
+    "display_name": "G'alaba bog'i bekati",
+    "district": "Olmazor",
+    "keywords": [
+      "galaba",
+      "bogi",
+      "pobeda",
+      "park",
+      "motor"
+    ],
+    "directions": {
+      "galaba_chorsu": {
+        "side_name": "Chorsu / Markaz tomon",
+        "routes": [
+          "11",
+          "28",
+          "85"
+        ],
+        "lat": 41.352,
+        "lon": 69.215
+      },
+      "galaba_keles": {
+        "side_name": "Keles / Qoraqamish tomon",
+        "routes": [
+          "11",
+          "28",
+          "85"
+        ],
+        "lat": 41.3523,
+        "lon": 69.2145
+      }
+    }
+  },
+  "qipchoq": {
+    "display_name": "Qipchoq (Sergeli) metrosi",
+    "district": "Sergeli",
+    "keywords": [
+      "qipchoq",
+      "sergeli",
+      "metro",
+      "qipchoq5",
+      "bekat"
+    ],
+    "directions": {
+      "qipchoq_chilonzor": {
+        "side_name": "Olmazor / Chilonzor metrosi tomon",
+        "routes": [
+          "38",
+          "40",
+          "86",
+          "130"
+        ],
+        "lat": 41.2095,
+        "lon": 69.2155
+      },
+      "qipchoq_quruvchilar": {
+        "side_name": "Quruvchilar / Yangihayot tomon",
+        "routes": [
+          "38",
+          "40",
+          "86",
+          "130"
+        ],
+        "lat": 41.2092,
+        "lon": 69.215
+      }
+    }
+  },
+  "sergeli_bozori": {
+    "display_name": "Sergeli dehqon bozori (Yangi Sergeli)",
+    "district": "Sergeli",
+    "keywords": [
+      "sergeli",
+      "bozor",
+      "yarmarka",
+      "dehqon",
+      "mashina",
+      "bozor"
+    ],
+    "directions": {
+      "sergeli_shahar": {
+        "side_name": "Chilonzor / Janubiy vokzal tomon",
+        "routes": [
+          "5",
+          "38",
+          "40",
+          "58",
+          "130"
+        ],
+        "lat": 41.2255,
+        "lon": 69.221
+      },
+      "sergeli_qipchoq": {
+        "side_name": "Qipchoq / Sputnik tomon",
+        "routes": [
+          "5",
+          "38",
+          "40",
+          "58",
+          "130"
+        ],
+        "lat": 41.2258,
+        "lon": 69.2205
+      }
+    }
+  },
+  "chortoq_sergeli": {
+    "display_name": "Chortoq bekati (Sergeli)",
+    "district": "Sergeli",
+    "keywords": [
+      "chortoq",
+      "charvak",
+      "sergeli",
+      "sputnik"
+    ],
+    "directions": {
+      "chortoq_markaz": {
+        "side_name": "Shahar markazi tomon",
+        "routes": [
+          "38",
+          "40",
+          "58"
+        ],
+        "lat": 41.232,
+        "lon": 69.2185
+      },
+      "chortoq_sergeli": {
+        "side_name": "Sergeli yarmarka tomon",
+        "routes": [
+          "38",
+          "40",
+          "58"
+        ],
+        "lat": 41.2323,
+        "lon": 69.218
+      }
+    }
+  },
+  "qoyliq": {
+    "display_name": "Qo'yliq dehqon bozori",
+    "district": "Bektemir",
+    "keywords": [
+      "qoyliq",
+      "qo'yliq",
+      "kuyluk",
+      "bozor",
+      "kompas",
+      "compass"
+    ],
+    "directions": {
+      "qoyliq_markaz": {
+        "side_name": "Shimoliy vokzal / Markaz tomon",
+        "routes": [
+          "12",
+          "18",
+          "26",
+          "30",
+          "45",
+          "93",
+          "110"
+        ],
+        "lat": 41.2385,
+        "lon": 69.3375
+      },
+      "qoyliq_rohat": {
+        "side_name": "Rohat / Yangiobod / Bektemir tomon",
+        "routes": [
+          "12",
+          "18",
+          "26",
+          "30",
+          "45",
+          "93",
+          "110"
+        ],
+        "lat": 41.2388,
+        "lon": 69.337
+      }
+    }
+  },
+  "kompas_mall": {
+    "display_name": "Compass SAVDO markazi (Qo'yliq)",
+    "district": "Bektemir",
+    "keywords": [
+      "kompas",
+      "compass",
+      "mall",
+      "qoyliq",
+      "korzinka"
+    ],
+    "directions": {
+      "kompas_shahar": {
+        "side_name": "Shahar markazi / Qo'yliq metrosi tomon",
+        "routes": [
+          "12",
+          "26",
+          "30",
+          "45",
+          "93"
+        ],
+        "lat": 41.2415,
+        "lon": 69.3412
+      },
+      "kompas_bektemir": {
+        "side_name": "Bektemir markazi / Ohangaron tomon",
+        "routes": [
+          "12",
+          "26",
+          "30",
+          "45",
+          "93"
+        ],
+        "lat": 41.2418,
+        "lon": 69.3408
+      }
+    }
+  },
+  "dostlik_metro": {
+    "display_name": "Do'stlik metrosi (Chkalov)",
+    "district": "Yashnobod",
+    "keywords": [
+      "dostlik",
+      "do'stlik",
+      "chkalov",
+      "tapoich",
+      "metro"
+    ],
+    "directions": {
+      "dostlik_markaz": {
+        "side_name": "Mashinasozlar / Markaz tomon",
+        "routes": [
+          "1",
+          "11",
+          "45",
+          "46",
+          "76",
+          "85",
+          "148"
+        ],
+        "lat": 41.2945,
+        "lon": 69.3175
+      },
+      "dostlik_rohat": {
+        "side_name": "Rohat / Tuzel / Qo'yliq tomon",
+        "routes": [
+          "1",
+          "11",
+          "45",
+          "46",
+          "76",
+          "85",
+          "148"
+        ],
+        "lat": 41.2948,
+        "lon": 69.317
+      }
+    }
+  },
+  "kadisheva": {
+    "display_name": "Aviasozlar bozori (Kadisheva)",
+    "district": "Yashnobod",
+    "keywords": [
+      "kadisheva",
+      "kadishev",
+      "aviasozlar",
+      "lisunova",
+      "bozor"
+    ],
+    "directions": {
+      "kadisheva_markaz": {
+        "side_name": "Do'stlik metrosi / Markaz tomon",
+        "routes": [
+          "15",
+          "28",
+          "44",
+          "72",
+          "148"
+        ],
+        "lat": 41.2915,
+        "lon": 69.3395
+      },
+      "kadisheva_tuzel": {
+        "side_name": "Tuzel / Qo'shbegi tomon",
+        "routes": [
+          "15",
+          "28",
+          "44",
+          "72",
+          "148"
+        ],
+        "lat": 41.2918,
+        "lon": 69.339
+      }
+    }
+  },
+  "rohat_aylanmasi": {
+    "display_name": "Rohat aylanmasi bekati",
+    "district": "Yashnobod",
+    "keywords": [
+      "rohat",
+      "roxat",
+      "aylanma",
+      "kolso",
+      "golft-klub"
+    ],
+    "directions": {
+      "rohat_shahar": {
+        "side_name": "Shahar markazi / Do'stlik tomon",
+        "routes": [
+          "12",
+          "30",
+          "45",
+          "110"
+        ],
+        "lat": 41.2725,
+        "lon": 69.361
+      },
+      "rohat_qoyliq": {
+        "side_name": "Qo'yliq bozori tomon",
+        "routes": [
+          "12",
+          "30",
+          "45",
+          "110"
+        ],
+        "lat": 41.2728,
+        "lon": 69.3605
+      }
+    }
+  },
+  "yangihayot": {
+    "display_name": "Yangihayot markazi bekati",
+    "district": "Yangihayot",
+    "keywords": [
+      "yangihayot",
+      "yangi",
+      "hayot",
+      "choshtepa",
+      "binokor"
+    ],
+    "directions": {
+      "yangihayot_shahar": {
+        "side_name": "Sergeli / Chilonzor tomon",
+        "routes": [
+          "38",
+          "40",
+          "130"
+        ],
+        "lat": 41.1985,
+        "lon": 69.2085
+      },
+      "yangihayot_cheti": {
+        "side_name": "Binokor / Shahar cheti tomon",
+        "routes": [
+          "38",
+          "40",
+          "130"
+        ],
+        "lat": 41.1988,
+        "lon": 69.208
+      }
+    }
+  }
+}
